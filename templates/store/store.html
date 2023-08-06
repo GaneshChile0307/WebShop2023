@@ -143,7 +143,11 @@
                             <del class="price-old">${{ product.price }}</del>
                         </div> <!-- price-wrap.// -->
                     </div>
-                    <a href="#" class="btn btn-block btn-success">Add to cart </a>
+                    {% if product.stock <= 0 %}
+                        <h3 class="btn btn-block btn-primary">Out Of Stock</h3>
+                    {% else %}
+                        <a href="#" class="btn btn-block btn-success">Add to cart </a>
+                    {% endif %}
                 </figcaption>
             </figure>
         </div> <!-- col.// -->
