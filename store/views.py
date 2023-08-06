@@ -22,13 +22,12 @@ def store(request,category_slug=None):
 
 
 def product_detail(request,category_slug,product_slug):
+    print("inside product details")
     try:
         single_product = Products.objects.get(category__slug=category_slug,slug=product_slug)
-        
-    
     except Exception as e:
         raise e
-    
+    print(single_product.price)
     context = {
         'single_product': single_product,
     }
