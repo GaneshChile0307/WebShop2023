@@ -140,3 +140,11 @@ MEDIA_ROOT = BASE_DIR/'media'
 # MEDIAFILES_DIRS= [
 #     'SoftWebShop/media',
 # ]
+
+
+# SMTP configuration
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ganeshchile030796@gmail.com'
+EMAIL_HOST_PASSWORD = 'muctsazkkgdnalem'
+EMAIL_USE_TLS = True
