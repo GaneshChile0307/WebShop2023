@@ -5,17 +5,17 @@ from category.models import Category
 # Create your views here.
 def store(request,category_slug=None):
     categories=None
-    Product = None
+    product = None
 
     if category_slug != None:
         categories =get_object_or_404(Category , slug=category_slug)
-        products =Products.objects.filter(category = categories ,is_available=True)
-        product_count = products.count()
+        product =Products.objects.filter(category = categories ,is_available=True)
+        product_count = product.count()
     else:
-        products = Products.objects.all().filter(is_available=True)
-        product_count = products.count()
+        product = Products.objects.all().filter(is_available=True)
+        product_count = product.count()
     context = {
-        'products' : products,
+        'products' : product,
         'product_count' : product_count,
     }
     return render(request, 'store/store.html',context)

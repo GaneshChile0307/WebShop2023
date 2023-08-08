@@ -4,6 +4,12 @@ from accounts.form import RegistartionFrom
 from accounts.models import Account
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+
+from cart.models import Cart, CartItem
+from cart.views import _cart_id
+
+
+
 # Verification email
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -77,7 +83,18 @@ def login(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
-            auth.login(request,user)
+            try:
+                cart = Cart.objects.get(cart_id = _cart_id(request))
+                is_cart_item_exists =  CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+
+                for item in cart_item:
+                    item.user = user
+                    item.save()
+            except :
+                pass
+            auth.login(request,user)        
             return redirect('home')
         else:
              return redirect('login')
@@ -93,6 +110,7 @@ def logout(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    # orders = Order.object.order_by('-created_by').filter(user_id=request.user.id,is_ordered=True)
     return render(request, 'account/dashboard.html')
 
 def forgotPassword(request):
